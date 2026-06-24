@@ -23,5 +23,6 @@ function sum(...a){
     }
 }
 
-console.log(sum(10,6,9)(20)(30)())
+console.log(sum(10,6,9)(20)(30,40)())
+console.log(sum(10,6,9)()(30)()) //doesn't match the base condition it will try to 25(30) and 25 is not a function
 
