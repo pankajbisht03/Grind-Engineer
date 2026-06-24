@@ -1,5 +1,16 @@
 //currying is technique in js where a function with multiple arguments is transformed into a sequence of functions each taking single arguments.
+// simple version
+function curry(a){
+    return function insideCurry(b){
+        if(b === undefined){
+            return a
+        }
+        return curry(a+b)
+    }
+}
+console.log(curry(10)(10)())
 
+// having multiple arguments
 function sum(...a){
     let total = a.reduce((acc, curr) => acc + curr, 0)
     console.log(a, "a")
