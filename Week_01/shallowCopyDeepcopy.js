@@ -3,16 +3,20 @@
 // Primitives are stored in stack memory with the actual values but Object types are stored in heap with the reference to their value in memory
 const obj = {
     user: "Rahul",
-    hobbies: ["Music", "Football", "Travelling"]
+    hobbies: ["Music", "Football", "Travelling"],
+    city: {
+        name:"USA"
+    }
 }
 
 const shallowCopy = Object.assign(obj);
 const anotherWay = {...obj}
-shallowCopy.user = "Nidhi";
+anotherWay.user = "Nidhi";
 shallowCopy.hobbies.push("Coding")
 
 console.log(obj, shallowCopy,anotherWay, "shallow")
-console.log(obj.hobbies === shallowCopy.hobbies)
+console.log(obj.city.name === anotherWay.city.name, "shallowReferences") //true as the reference are same pointing towards the same memory location
+console.log(obj.user === anotherWay.user, "shallowReferences") //false
 
 //Deep Copy
 //It creates a new object and copies the nested level of objects not just top level elements
@@ -25,7 +29,8 @@ const normalObject = {
 }
 
 let deeplyCopiedObj = structuredClone(normalObject);
-deeplyCopiedObj.city.name = "Mumbai"
+// deeplyCopiedObj.city.name = "Mumbai"
+console.log(normalObject.city.name === deeplyCopiedObj.city.name, "deepReferences")
 //normal object doesn't get affected as we are deeply cloning normalObject so for object types the reference to memory will be different
 console.log(normalObject, deeplyCopiedObj, "hereee")
 
@@ -58,3 +63,21 @@ const copied = deepCopy(normalObject);
 copied.city.name = "Gurgaon";
 
 console.log(copied, normalObject, "deeepCopy")
+
+// JS Promises are JS object that tells the eventual completion of an asynchronous task.
+// Pending,Fulfilled, Rejected
+
+const p1  = new Promise((res, rej) => {
+    const flag = true;
+    if(flag){
+        res(console.log("success"))
+    }else{
+        rej("rejected")
+    }
+})
+
+p1.then((res) => {
+    return res
+}).catch((err) => {
+    console.log(err)
+})
