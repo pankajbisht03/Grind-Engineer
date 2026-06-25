@@ -104,6 +104,7 @@ const profile = {
      if(Array.isArray(obj)){
          return obj.map((itm, ind) => deepCopy(itm))
      }
+     // to dos handling circular references 
      const copiedObj = {};
      for(const key in obj){
          if(obj.hasOwnProperty(key)){
