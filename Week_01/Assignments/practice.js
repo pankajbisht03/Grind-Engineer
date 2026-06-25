@@ -68,7 +68,7 @@ const profile = {
   // Hi, I'm undefined as Arrow functions permanently capture this from their surrounding scope, so their context cannot be changed.
   // Welcome Candidate as welcome is a normal function and this will refer to friend obj
 
-  
+
 
 //   ### **Swiggy | Machine Coding: Recursive Array Flattening**
 // **Question:** Implement a polyfill for `Array.prototype.flat()`. Your implementation must handle the `depth` argument correctly.
@@ -88,4 +88,48 @@ const profile = {
         return res
   }
 
-  console.log(nestedFlat([1,3,3,3,[3,2,1,[3,2]]], 2))
+  console.log(nestedFlat([1,3,3,3,[3,2,1,[3,2]]], Infinity))
+
+
+//   ### **Atlassian | Machine Coding: The Ultimate Deep Clone**
+
+// **Question:** Implement `deepClone(obj)`. It must handle circular references. Atlassian specifically checks for memory efficiency and handling of nested structures without using `JSON.stringify`.
+ function deepCopy (obj){
+     // handling null and primitives
+     if(obj === null || typeof obj !== "object"){
+         return obj
+     }
+
+     // handling arrays
+     if(Array.isArray(obj)){
+         return obj.map((itm, ind) => deepCopy(itm))
+     }
+     const copiedObj = {};
+     for(const key in obj){
+         if(obj.hasOwnProperty(key)){
+            copiedObj[key] = deepCopy(copiedObj[key])
+         }
+     }
+ }
+
+
+//  ### **Adobe | Conceptual Round**
+
+// **Question:** What will be logged? How do you fix this using the spread operator while keeping the code readable?
+
+const state = {
+    user: { id: 101, details: { city: 'Bangalore' } },
+    theme: 'dark'
+  };
+  
+//   const newState = {...state };
+//   newState.user.details.city = 'Chennai';
+  
+//   console.log(state.user.details.city); 
+//   state.user.details.city will be Chennai as ... copy shallow
+// to fix this we can use structuredClone() it will deeply copy the obj without affecting the main obj
+
+const structuredCopy = structuredClone(state);
+structuredCopy.user.details.city = 'Pune';
+console.log(state.user.details.city, "adobe")
+  // Expected output? Why did it change?
