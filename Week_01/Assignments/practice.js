@@ -134,3 +134,38 @@ const structuredCopy = structuredClone(state);
 structuredCopy.user.details.city = 'Pune';
 console.log(state.user.details.city, "adobe")
   // Expected output? Why did it change?
+
+
+  //Call apply and bind polyfill
+
+  Function.prototype.myCall  = function(context = {}, args){
+    if(typeof this !== "function"){
+      return 
+    }
+    context.fn  = this;
+    context.fn(args)
+  }
+
+  Function.prototype.myApply = function (context = {}, args=[]) {
+    if(typeof this !== "function"){
+      return 
+    }
+    context.fn  = this;
+    context.fn(args)
+  }
+  Function.prototype.myBind = function(context={}, args){
+    context.fn = this;
+    return function(newArgs){
+      context.fn(args, newArgs)
+
+    }
+  }
+  function greetUser(city){
+    console.log(`Hello ${this.user} from ${city}`)
+
+  }
+  const userObj = {
+    user: "Aniket"
+  }
+
+  greetUser.myCall(userObj, "Delhi")
