@@ -44,7 +44,6 @@ console.log('6 - Sync End');
 
 // 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥
 
-
 // ## Call, Apply, and Bind
 
 // ### **Meta (Facebook) | Technical Trivia: Context in Arrow Functions**
