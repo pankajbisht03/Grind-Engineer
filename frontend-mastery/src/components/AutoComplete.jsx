@@ -4,8 +4,7 @@ function AutoComplete(){
     const [results, setResults]  = useState([]);
     const [cache, setCache] = useState({});
     const [showResults, setShowResults] = useState(true);
-    const[selectedInput, setSelectedInput] = useState("");
-    const [selectedIndex, setSelectedIndex] = useState(-1)
+    const [activeIndex, setActiveIndex] = useState(-1)
 
     useEffect(() => {
         if(!inputValue.trim()){
@@ -41,17 +40,26 @@ function AutoComplete(){
         switch(e.key){
             case "ArrowDown":
                 e.preventDefault()
+                if(results.length > 0){
+                    setActiveIndex((prev) => prev <  results.length ? prev + 1: prev)
+                }
                 console.log("ArrowDown");
                 break
             case "ArrowUp":
                 e.preventDefault();
+                setActiveIndex((prev) => prev > 0 ? prev - 1: 0)
                 console.log("Arrowup");
                 break
             case "Enter":
                 e.preventDefault();
+                if(activeIndex >= 0){
+                    setInputValue(results[activeIndex].name)
+                }
                 console.log("Enter");
                 break
             case "Escape":
+                setShowResults(false);
+                setActiveIndex(-1)
                 console.log("Escape");
                 break
             default:
@@ -61,12 +69,12 @@ function AutoComplete(){
     
     return (
         <div >
-            <input onFocus={() => setShowResults(true)} onBlur={() => setShowResults(false)} className="border" value={inputValue} onChange={(e) => handleInputChange(e)} onKeyDown={handleKeyDown} placeholder="Search"/>
+            <input className="p-2" onFocus={() => setShowResults(true)} onBlur={() => setShowResults(false)} className="border" value={inputValue} onChange={(e) => handleInputChange(e)} onKeyDown={handleKeyDown} placeholder="Search"/>
             {results.length>0 && showResults&& 
                      <div className="w-50 border" >
                      {results.map((itm, ind) => (
                          <div key={itm.id}>
-                             <span>{itm.name}</span>
+                             <span className={`${activeIndex === ind ? "bg-blue-500 text-white":"hover:bg-gray-100"}`}>{itm.name}</span>
                          </div>
                      ))}
                  </div>
